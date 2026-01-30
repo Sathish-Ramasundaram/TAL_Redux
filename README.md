@@ -35,7 +35,6 @@ The projects follow these principles:
 
 ## 📁 Overall Folder Structure (Feature-Based)
 
-```
 
 src/
 ├── app/
@@ -53,7 +52,6 @@ src/
 ├── App.tsx
 └── index.tsx
 
-```
 
 ---
 
