@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+build/
+dist/
+
+# Environment files
+.env
+.env.*
+
+# Logs
+*.log
+
+# Testing
+coverage/
+
+# OS/System files
+.DS_Store
+Thumbs.db
+
+# Editor configs (optional)
+.vscode/
+.idea/
+
+# Storybook
+storybook-static/
+
+# Cypress/Playwright (optional)
+cypress/videos/
+cypress/screenshots/
+playwright-report/
