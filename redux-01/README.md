@@ -43,6 +43,18 @@
 
 ---
 
+## Project Description
+
+Implemented a complete Saga-driven authentication flow including login and logout, where UI actions dispatch Redux actions, Saga workers handle async API simulation, and reducers update global state accordingly.
+
+Added protected routing using Redux auth state, ensuring that secured pages like the Dashboard are only accessible after successful login.
+
+Demonstrated core Redux-Saga concepts including worker sagas, watcher sagas, takeLatest behavior for user-intent actions (login/logout), call and put effects, delay simulation, and structured error handling with try/catch inside sagas.
+
+The project is structured to further extend with additional Saga patterns such as takeEvery, race, cancel, throttle, and parallel effects through dashboard and chat-style task demonstrations.
+
+--
+
 ## ⚡ Local setup
 
 1. Install dependencies:
