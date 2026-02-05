@@ -1,28 +1,27 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loginRequest } from "../store/authSlice";
-import { useNavigate, Link } from "react-router-dom";
-
-
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginRequest, loginSuccess } from '../store/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [devBypass, setDevBypass] = useState(false);
+
 
   const { loading, error, isLoggedIn } = useSelector(
-  (state: any) => state.auth
-);
+    (state: any) => state.auth
+  );
 
-useEffect(() => {
-  if (isLoggedIn) {
-    navigate("/dashboard");
-  }
-}, [isLoggedIn, navigate]);
+  useEffect(() => {
+    if (isLoggedIn && !devBypass) {
+  navigate("/otp");
+}
+  }, [isLoggedIn, navigate]);
 
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,15 +35,9 @@ useEffect(() => {
         onSubmit={handleSubmit}
         className="bg-white shadow-lg rounded-xl p-8 w-96"
       >
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          Login
-        </h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 
-        {error && (
-          <p className="mb-4 text-red-600 text-sm">
-            {error}
-          </p>
-        )}
+        {error && <p className="mb-4 text-red-600 text-sm">{error}</p>}
 
         <input
           type="email"
@@ -66,21 +59,23 @@ useEffect(() => {
           type="submit"
           disabled={loading}
           className={`w-full py-2 rounded text-white transition
-            ${loading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"}
+            ${loading ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-700'}
           `}
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? 'Logging in...' : 'Login'}
         </button>
 
-        <div className="mt-4 text-center">
-  <Link
-    to="/register"
-    className="text-sm text-blue-600 hover:underline"
-  >
-    Create account
-  </Link>
-</div>
-
+        <button
+  type="button"
+  onClick={() => {
+    setDevBypass(true);
+    dispatch(loginSuccess());
+    navigate("/dashboard");
+  }}
+  className="w-full mt-3 py-2 rounded border border-gray-400 text-sm hover:bg-gray-100"
+>
+  Dev Login
+</button>
 
       </form>
     </div>

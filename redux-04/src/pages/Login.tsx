@@ -8,13 +8,11 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
-
   const { loading, error, isLoggedIn } = useSelector(
   (state: any) => state.auth
 );
 
-  useEffect(() => {
+useEffect(() => {
   if (isLoggedIn) {
     navigate("/dashboard");
   }
@@ -76,3 +74,4 @@ function Login() {
 }
 
 export default Login;
+

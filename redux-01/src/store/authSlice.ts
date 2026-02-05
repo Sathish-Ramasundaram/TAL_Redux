@@ -7,6 +7,8 @@ const authSlice = createSlice({
     loading: false,
     error: null as string | null,
     isLoggedIn: false,
+    otpStatus: "idle" as "idle" | "waiting" | "success" | "timeout" | "error",
+otpError: null as string | null,
   },
 
   reducers: {
@@ -37,19 +39,30 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
     },
 
-    registerRequest: (state, _action) => {
-      state.loading = true;
-      state.error = null;
-    },
+    
+otpStart: (state) => {
+  state.otpStatus = "waiting";
+  state.otpError = null;
+},
 
-    registerSuccess: (state) => {
-      state.loading = false;
-    },
+otpSubmitRequest: (_state, _action) => {},
 
-    registerFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
+otpSuccess: (state) => {
+  state.otpStatus = "success";
+  state.isLoggedIn = true;
+},
+
+otpTimeout: (state) => {
+  state.otpStatus = "timeout";
+  state.otpError = "OTP expired";
+  state.isLoggedIn = false;
+},
+
+otpFailure: (state, action) => {
+  state.otpStatus = "error";
+  state.otpError = action.payload;
+},
+
   },
 });
 
@@ -59,9 +72,11 @@ export const {
   loginFailure,
   logoutRequest,
   logoutSuccess,
-  registerRequest,
-  registerSuccess,
-  registerFailure,
+   otpStart,
+  otpSubmitRequest,
+  otpSuccess,
+  otpTimeout,
+  otpFailure,
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,6 +1,6 @@
 
 import { useDispatch } from "react-redux";
-import { loginFailure } from "../store/authSlice";
+import { loginFailure, logoutRequest  } from "../store/authSlice";
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ function Dashboard() {
         </p>
 
         <button
-          onClick={() => dispatch(loginFailure("Logged out"))}
+  onClick={() => dispatch(logoutRequest())}
           className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
         >
           Logout (demo)

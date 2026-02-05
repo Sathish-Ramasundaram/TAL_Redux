@@ -158,6 +158,8 @@ root.render(
 <React.StrictMode> is a development-only helper wrapper in React.
 It helps you find mistakes and unsafe code patterns early while building your app.
 
+Provider makes the store available to all React components.
+
 9. Before:
    App → no Redux access
 
@@ -174,7 +176,10 @@ No, visual change yet, Because we only connected wiring yet.
     Create your first Redux slice (reducer)
     We will store just one thing: loading flag.
 
-A slice = state + reducers + actions bundled together.
+Note:
+Slice contains reducer
+Slice = reducer + actions + setup bundle
+Reducer = state update function
 Redux Toolkit gives this shortcut so we don’t write long switch statements.
 
 11. create src/store/appSlice.ts
@@ -211,11 +216,6 @@ export const { startLoading, stopLoading } = appSlice.actions;
 export default appSlice.reducer;
 
 ```
-
-Note:
-Slice contains reducer
-Slice = reducer + actions + setup bundle
-Reducer = state update function
 
 No visual changes yet
 

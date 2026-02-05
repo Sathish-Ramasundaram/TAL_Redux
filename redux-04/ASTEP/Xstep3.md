@@ -1,7 +1,6 @@
 1. Tiny Goal: 
 Protect Dashboard route — block access if not logged in
 
-
 src/routes/ProtectedRoute.tsx
 
 mkdir src\routes   
@@ -30,21 +29,7 @@ export default ProtectedRoute;
 
 ```
 
-2. update App.tsx
-
-import ProtectedRoute from "./routes/ProtectedRoute";
-
-To: 
-<Route
-  path="/dashboard"
-  element={
-    <ProtectedRoute>
-      <Dashboard />
-    </ProtectedRoute>
-  }
-/>
-
-3. red line under JSX 
+2. red line under JSX 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
 
 Fix: 
@@ -60,6 +45,22 @@ children: ReactNode  ✅ preferred
 children: JSX.Element ❌ too strict
 
 Most production code uses ReactNode.
+
+
+3. 
+update App.tsx
+
+import ProtectedRoute from "./routes/ProtectedRoute";
+
+To: 
+<Route
+  path="/dashboard"
+  element={
+    <ProtectedRoute>
+      <Dashboard />
+    </ProtectedRoute>
+  }
+/>
 
 4. Test 1: 
 

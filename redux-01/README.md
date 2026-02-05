@@ -1,109 +1,150 @@
-# redux-01 ⚛️ + Redux + Redux-Saga
 
-**A small starter project demonstrating React + TypeScript + Redux Toolkit + Redux-Saga** with routing, basic auth flow (mocked), and a minimal Rspack + Tailwind setup.
 
----
+# 📦 Redux-Saga Concepts Demo App (React + TypeScript + Rspack)
 
-## 🚀 Quick overview
+This project is a concept-driven React application built to demonstrate **real-world Redux-Saga patterns** using a UI-visible, feature-based approach.
+Each major Redux-Saga effect is implemented with a working screen or interaction, not just console examples.
 
-- Minimal demo app to learn how to wire up Redux Toolkit, Redux-Saga, and React Router in a TypeScript React project.
-- Includes a simple auth flow (Login, Register, Protected Dashboard), API stubs under `src/api`, and a store with slices and sagas under `src/store`.
+The application includes authentication flow, OTP race handling, dashboard bundle loading, background sync control, chat messaging, inventory checks using select, and a throttled mail undo system.
 
----
-
-## 🧭 Project structure (key files)
-
-- `src/`
-  - `App.tsx` — main app component and routes
-  - `index.tsx` — app entry
-  - `index.css` — Tailwind entry
-  - `api/` — mock API modules (`authApi.ts`, `demoApi.ts`, `registerApi.ts`)
-  - `pages/` — `Login`, `Register`, `Dashboard`
-  - `routes/ProtectedRoute.tsx` — Route guard
-  - `store/` — Redux Toolkit slices, sagas, and store setup (`authSlice.ts`, `appSlice.ts`, `sagas.ts`, `index.ts`)
+Built using **React + TypeScript + Redux Toolkit + Redux-Saga + Tailwind CSS + Rspack**.
 
 ---
 
-## 🧰 Tech stack
+# 🚀 Features Implemented
 
-- React 19 + TypeScript
-- Redux Toolkit
-- Redux-Saga
-- React Router DOM
-- Rspack (dev server & build)
-- Tailwind CSS
-- Jest + ts-jest for tests
+## 🔐 Authentication Flow
 
----
+* Login flow managed with Redux-Saga
+* Protected dashboard routing
+* Dev login shortcut (bypass OTP for testing)
+* Saga-driven async login handling
 
-## 💻 Prerequisites
+## 🔢 OTP Verification — Race Effect Demo
 
-- Node.js (recommended 16+)
-- npm (or yarn/pnpm)
+* OTP page between Login and Dashboard
+* Saga `race` between:
 
----
-
-## Project Description
-
-Implemented a complete Saga-driven authentication flow including login and logout, where UI actions dispatch Redux actions, Saga workers handle async API simulation, and reducers update global state accordingly.
-
-Added protected routing using Redux auth state, ensuring that secured pages like the Dashboard are only accessible after successful login.
-
-Demonstrated core Redux-Saga concepts including worker sagas, watcher sagas, takeLatest behavior for user-intent actions (login/logout), call and put effects, delay simulation, and structured error handling with try/catch inside sagas.
-
-The project is structured to further extend with additional Saga patterns such as takeEvery, race, cancel, throttle, and parallel effects through dashboard and chat-style task demonstrations.
-
---
-
-## ⚡ Local setup
-
-1. Install dependencies:
-
-```bash
-npm install
-```
-
-2. Start development server:
-
-```bash
-npm run dev
-```
-
-3. Build for production:
-
-```bash
-npm run build
-```
-
-> Note: There is no `test` script in `package.json` by default — run `npx jest` or add a script: `"test": "jest"` if you want `npm test`.
+  * user OTP submit
+  * timeout delay
+* Timeout shows Tailwind modal dialog
+* Expired OTP resets auth state and redirects
+* Demonstrates: `race`, `take`, `delay`, `call`, `put`
 
 ---
 
-## 🧪 Tests
+## 💬 Chat Demo — takeEvery
 
-- Jest is configured via `jest.config.js` and `src/jest.setup.ts`.
-- Run tests with:
-
-```bash
-npx jest --coverage
-```
+* Chat message sender page
+* Multiple messages processed concurrently
+* Demonstrates `takeEvery`
+* Shows parallel saga handling
 
 ---
 
-## 💡 Tips & notes
+## 📦 Inventory Demo — select Effect
 
-- The `src/api` modules are simple stubs — replace with real API calls or wire up a backend as you progress.
-- Sagas live in `src/store/sagas.ts` and coordinate side-effects (API calls, async flows).
-- Add additional linting or formatting scripts as needed for your workflow.
-
----
-
-## ✅ Contributing
-
-Contributions and suggestions welcome — open issues or PRs.
+* Inventory items stored in Redux
+* Saga reads state using `select`
+* Conditional API simulation based on item count
+* Demonstrates state-driven saga branching
 
 ---
 
-## 📄 License
+## 📊 Dashboard Bundle Loader — all Effect
 
-MIT
+* Sidebar profile panel with user icon trigger
+* Loads profile, notifications, and stats together
+* Saga uses `all` to fetch data in parallel
+* UI updates only after all complete
+* Demonstrates parallel effect coordination
+
+---
+
+## 🔄 Background Sync — fork + cancel
+
+* Dashboard background sync demo
+* Start Sync → forked infinite loop task
+* Stop Sync → cancel running task
+* UI shows running/stopped status
+* Console shows periodic sync ticks
+* Demonstrates background saga task control
+
+---
+
+## ✉️ Mail Undo Window — throttle Effect
+
+* Mailbox demo page
+* Send Mail → Undo available for 10 seconds
+* Undo button remains visible during window
+* Only first Undo click is accepted
+* Further clicks throttled
+* After window expires → undo disabled
+* Saga combines:
+
+  * `throttle`
+  * `select` state guard
+  * timed undo window
+* Demonstrates rate-limiting + business rule validation
+
+---
+
+# 🧠 Redux-Saga Concepts Demonstrated
+
+This project includes working examples of:
+
+* saga middleware setup
+* worker / watcher pattern
+* generator functions (`function*`)
+* `yield` flow control
+
+## Effects Used
+
+* `call` — async API execution
+* `put` — dispatch Redux actions
+* `takeLatest` — latest action wins
+* `takeEvery` — handle all actions
+* `select` — read Redux state inside saga
+* `race` — timeout vs user action
+* `all` — parallel effect execution
+* `fork` — background task start
+* `cancel` — background task stop
+* `throttle` — rate-limit actions
+* `delay` — saga-controlled timers
+
+---
+
+# 🎨 UI & UX
+
+* Tailwind CSS styled components
+* Modal dialog for OTP timeout
+* Sidebar profile drawer
+* Dashboard cards for each saga concept
+* State-driven button behavior
+* Console + UI proof for every saga pattern
+
+---
+
+# 🛠 Tech Stack
+
+* React
+* TypeScript
+* Redux Toolkit
+* Redux-Saga
+* Tailwind CSS
+* Rspack
+* React Router
+
+---
+
+# 🎯 Purpose of This Project
+
+This project was built to:
+
+* Learn Redux-Saga deeply through practical features
+* Demonstrate saga patterns with UI outcomes
+* Serve as a reference for async flow architecture
+* Provide interview-ready saga examples
+* Show correct state modeling with async workflows
+
+---

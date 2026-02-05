@@ -1,10 +1,10 @@
 
-import { put, call, takeLatest } from "redux-saga/effects";
+import { put, call, takeLatest, delay } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { startLoading, stopLoading } from "./appSlice";
 import { fetchDemoStatus } from "../api/demoApi";
 import { loginApi } from "../api/authApi";
-import { loginRequest, loginSuccess, loginFailure } from "./authSlice";
+import { loginRequest, loginSuccess, loginFailure, logoutRequest, logoutSuccess } from "./authSlice";
 
 // worker saga
 function* startLoadingWorker(): SagaIterator {
@@ -19,6 +19,10 @@ function* startLoadingWorker(): SagaIterator {
   }
 }
 
+function* logoutWorker(): SagaIterator {
+  yield delay(800); // simulate cleanup
+  yield put(logoutSuccess());
+}
 
 function* loginWorker(action: ReturnType<typeof loginRequest>): SagaIterator {
   try {
@@ -37,4 +41,5 @@ function* loginWorker(action: ReturnType<typeof loginRequest>): SagaIterator {
 export function* rootSaga() {
   yield takeLatest(startLoading.type, startLoadingWorker);
   yield takeLatest(loginRequest.type, loginWorker);
+  yield takeLatest(logoutRequest.type, logoutWorker);
 }
