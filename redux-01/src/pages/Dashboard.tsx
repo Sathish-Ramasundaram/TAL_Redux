@@ -111,13 +111,6 @@ const syncRunning = useSelector(
 
     {/* Card 1 — Chat */}
     <div className="bg-white shadow-lg rounded-xl p-8 w-96 text-center">
-      <h1 className="text-2xl font-bold mb-4">
-        Dashboard
-      </h1>
-
-      <p className="mb-6 text-gray-600">
-        Login successful ✅
-      </p>
 
       <Link
         to="/chat"

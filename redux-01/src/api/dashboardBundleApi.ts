@@ -1,6 +1,6 @@
 export async function fetchProfileApi() {
   console.log("profile start");
-  await new Promise((r) => setTimeout(r, 1200));
+  await new Promise((r) => setTimeout(r, 4000));
 
   console.log("profile done");
   return {
@@ -12,7 +12,7 @@ export async function fetchProfileApi() {
 
 export async function fetchNotificationsApi() {
   console.log("notifications start");
-  await new Promise((r) => setTimeout(r, 800));
+  await new Promise((r) => setTimeout(r, 1000));
 
   console.log("notifications done");
   return [
@@ -23,7 +23,7 @@ export async function fetchNotificationsApi() {
 
 export async function fetchStatsApi() {
   console.log("stats start");
-  await new Promise((r) => setTimeout(r, 1500));
+  await new Promise((r) => setTimeout(r, 3000));
 
   console.log("stats done");
   return {

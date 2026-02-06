@@ -27,7 +27,6 @@ Saga reads items from Redux store using select
 
 3. Create Inventory Slice (Store Items)
 This slice will hold your items:
-mobile, laptop, bike, headphone, camera
 
 src/store/inventorySlice.ts
 

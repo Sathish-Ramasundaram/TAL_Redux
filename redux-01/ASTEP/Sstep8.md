@@ -340,3 +340,82 @@ function* undoMailWorker(): SagaIterator {
 
   yield put(mailUndone());
 }
+
+
+------
+
+Note: 
+I see some problems in my project. If I refresh the page from dashboard, it is come back to log in page. And first login, it is take me through OTP page. FOr second log in after log out, it is skip otp page.
+
+Fix: 1
+Reset OTP on New Login
+
+authSlice: 
+From: 
+loginRequest: (
+  state,
+  action: { payload: { email: string; password: string } }
+) => {
+  state.loading = true;
+  state.error = null;
+},
+
+To: 
+loginRequest: (
+  state,
+  action: { payload: { email: string; password: string } }
+) => {
+  state.loading = true;
+  state.error = null;
+
+  // ✅ reset OTP for fresh login
+  state.otpStatus = "idle";
+  state.otpError = null;
+},
+
+
+FIX 2 — Reset OTP on Logout
+From: 
+logoutSuccess: (state) => {
+  state.loading = false;
+  state.isLoggedIn = false;
+},
+
+To: 
+logoutSuccess: (state) => {
+  state.loading = false;
+  state.isLoggedIn = false;
+
+  // ✅ reset OTP
+  state.otpStatus = "idle";
+  state.otpError = null;
+},
+
+Fix 3: Persist Login Across Refresh
+We store login flag in browser storage.
+Saga.ts
+From: 
+yield put(loginSuccess());
+
+To: 
+yield put(loginSuccess());
+localStorage.setItem("isLoggedIn", "true");
+
+-----------------------
+From: 
+yield put(logoutSuccess());
+
+To: 
+yield put(logoutSuccess());
+localStorage.removeItem("isLoggedIn");
+
+
+FIX 4 — Hydrate Initial Login State
+📂 File: authSlice.ts
+
+Find: 
+isLoggedIn: false,
+
+Replace with: 
+isLoggedIn: localStorage.getItem("isLoggedIn") === "true",
+

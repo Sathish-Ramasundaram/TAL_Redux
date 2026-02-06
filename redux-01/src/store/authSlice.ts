@@ -6,7 +6,7 @@ const authSlice = createSlice({
   initialState: {
     loading: false,
     error: null as string | null,
-    isLoggedIn: false,
+    isLoggedIn: localStorage.getItem("isLoggedIn") === "true",
     otpStatus: "idle" as "idle" | "waiting" | "success" | "timeout" | "error",
 otpError: null as string | null,
   },
@@ -18,11 +18,19 @@ otpError: null as string | null,
     ) => {
       state.loading = true;
       state.error = null;
+
+        // ✅ reset OTP for fresh login
+  state.otpStatus = "idle";
+  state.otpError = null;
     },
 
     loginSuccess: (state) => {
       state.loading = false;
       state.isLoggedIn = true;
+
+      // ✅ reset OTP
+  state.otpStatus = "idle";
+  state.otpError = null;
     },
 
     loginFailure: (state, action) => {

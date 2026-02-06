@@ -54,10 +54,10 @@ import {
   undoExpired,
 } from './mailSlice';
 
-let syncTask: any = null;
+export let syncTask: any = null;
 
 // worker saga
-function* startLoadingWorker(): SagaIterator {
+export function* startLoadingWorker(): SagaIterator {
   try {
     const result: any = yield call(fetchDemoStatus);
     console.log('Saga got:', result);
@@ -69,13 +69,14 @@ function* startLoadingWorker(): SagaIterator {
   }
 }
 
-function* loginWorker(action: ReturnType<typeof loginRequest>): SagaIterator {
+export function* loginWorker(action: ReturnType<typeof loginRequest>): SagaIterator {
   try {
     const { email, password } = action.payload;
 
     yield call(loginApi, email, password);
 
     yield put(loginSuccess());
+    localStorage.setItem("isLoggedIn", "true");
   } catch (e: any) {
     yield put(loginFailure(e.message));
   }
@@ -84,6 +85,7 @@ function* loginWorker(action: ReturnType<typeof loginRequest>): SagaIterator {
 function* logoutWorker(): SagaIterator {
   yield delay(800); // simulate cleanup
   yield put(logoutSuccess());
+  localStorage.removeItem("isLoggedIn");
 }
 
 function* sendMessageWorker(
@@ -160,7 +162,7 @@ function* bundleWorker(): SagaIterator {
 
 //
 
-function* syncWorker(): SagaIterator {
+export function* syncWorker(): SagaIterator {
   yield put(syncStarted());
 
   let i = 1;
@@ -172,11 +174,19 @@ function* syncWorker(): SagaIterator {
 
   // never reached normally — only if cancelled
   // (we’ll handle that next step)
+
+
+  // for (let i = 0; i < 5; i++) {
+  //   console.log("sync tick");
+  //   yield delay(1000);
+  // }
+
+
 }
 
 // start flow - fork
 
-function* startSyncFlow(): SagaIterator {
+export function* startSyncFlow(): SagaIterator {
   if (!syncTask) {
     syncTask = yield fork(syncWorker);
   }
@@ -184,13 +194,16 @@ function* startSyncFlow(): SagaIterator {
 
 // stop flow - cancel
 
-function* stopSyncFlow(): SagaIterator {
-  if (syncTask) {
-    yield cancel(syncTask);
+export function* stopSyncFlow(): SagaIterator {
+  const task = syncTask;
+
+  if (task) {
+    yield cancel(task);
     syncTask = null;
     yield put(syncStopped());
   }
 }
+
 
 // Mail - Send Worker
 
