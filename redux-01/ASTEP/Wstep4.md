@@ -1,16 +1,14 @@
 1. Select: 
 Saga uses select to read Redux store data and decide which API to call.
 
-Saga can read Redux state using select — not everything must come from action payload.
-
-call fetches data
 select reads Redux store state
+call fetches data
 
-📞 call → ask outside company (API)
 📂 select → check internal files (Redux store)
+📞 call → ask outside company (API)
 
-call → API data ✅
 select → Redux state ✅
+call → API data ✅
 
 Same word — different layer
 Tool	        Used Where	    Purpose
@@ -44,7 +42,7 @@ type InventoryState = {
 };
 
 const initialState: InventoryState = {
-  items: ["Mobile", "Laptop", "Bike", "Headphone", "Camera"],
+  items: ["Vivo A1", "Vivo A2", "Vivo A3", "Vivo A4", "Vivo A5"],
 };
 
 const inventorySlice = createSlice({
@@ -77,7 +75,7 @@ Redux store now also has:
 store.inventory.items
 
 Currently contains:
-["Mobile","Laptop","Bike","Headphone","Camera"]
+["Vivo A1", "Vivo A2", "Vivo A3", "Vivo A4", "Vivo A5"]
 
 
 5. Next step: 
@@ -89,7 +87,6 @@ import { useSelector } from "react-redux";
 Read Inventory From Store
 
 Inside component (near other selectors):
-
 const items = useSelector(
   (state: any) => state.inventory.items
 );
@@ -148,7 +145,8 @@ import { select } from "redux-saga/effects";
 import { availableApi, demandApi } from "../api/inventoryApi";
 
 
-Add Worker Saga (Select Demo)
+Add Worker Saga (Select Demo):
+
 function* inventoryCheckWorker(): SagaIterator {
   const items: string[] = yield select(
     (state: any) => state.inventory.items

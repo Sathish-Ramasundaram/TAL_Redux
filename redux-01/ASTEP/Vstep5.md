@@ -130,7 +130,7 @@ otpStart dispatched
    - otpSubmitRequest action
    - OR 3-second timeout
 
-import { race, take, delay, call, put } from "redux-saga/effects";
+import { put, call, delay, takeLatest, takeEvery, select, race, take } from "redux-saga/effects";
 import { verifyOtpApi } from "../api/otpApi";
 import {
   otpStart,
@@ -169,8 +169,6 @@ function* otpRaceWorker(): SagaIterator {
 ----
 
 Add watcher: 
-import { takeLatest } from "redux-saga/effects";
---
 yield takeLatest(otpStart.type, otpRaceWorker);
 
 Why takeLatest Here?
@@ -277,6 +275,7 @@ import OtpPage from "./pages/OtpPage";
 Login: 
 
 Find this effect: 
+
 useEffect(() => {
   if (isLoggedIn) {
     navigate("/dashboard");
@@ -333,7 +332,7 @@ if (otpStatus === "timeout") {
 
 12. Test:
 
-Still some issue. Chatgtp suggest to use Tailwind Model.
+Still same issue. Chatgtp suggest to use Tailwind Model.
 Goal: 
 otpStatus === "timeout"
 → show modal dialog
@@ -413,56 +412,9 @@ When OTP expires, user should be treated as:
 not logged in
 
 Update authSlice to: 
+
 otpTimeout: (state) => {
   state.otpStatus = "timeout";
   state.otpError = "OTP expired";
   state.isLoggedIn = false;
 },
-
-16. 
-17. 
-18. 
-19. 
-20. 
-21. 
-22. 
-23. 
-24.  
-25. 
-26. 
-27. 
-28. 
-29. 
-30. 
-31. 
-32. 
-33. 
-34. 
-35. 
-36. 
-37. 
-38. 
-39. 
-40. 
-41. 
-42. 
-43. 
-44. 
-45. 
-46. 
-47. 
-48. 
-49. 
-50.  
-51. 
-52. 
-53. 
-54. 
-55. 
-56. 
-57. 
-58. 
-59. 
-60. 
-
-

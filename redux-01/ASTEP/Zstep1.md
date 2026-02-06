@@ -160,15 +160,27 @@ It helps you find mistakes and unsafe code patterns early while building your ap
 
 Provider makes the store available to all React components.
 
+
+import { store } from "./store";
+If this exists:
+store.ts
+→ It refers to the file
+
+If this exists:
+store/index.ts
+→ It refers to the folder entry file. This project store refers to store/index.ts
+
 9. Before:
    App → no Redux access
 
 Now:
+<Provider store={store}>
 Provider
 ↓
 Redux Store
 ↓
 App + all components can use Redux
+
 
 No, visual change yet, Because we only connected wiring yet.
 
@@ -181,6 +193,12 @@ Slice contains reducer
 Slice = reducer + actions + setup bundle
 Reducer = state update function
 Redux Toolkit gives this shortcut so we don’t write long switch statements.
+
+const [email, setEmail] = useState('');
+Reducer vs setEmail:
+setEmail → directly change your notebook
+Reducer → office policy manual that defines how records are updated
+dispatch → submit update request form
 
 11. create src/store/appSlice.ts
 
@@ -320,3 +338,24 @@ useDispatch sends actions to Redux store.
 18. Behavior:
     Click Start → Redux updates → UI changes
     Click Stop → Redux updates → UI changes
+
+19. Flow:
+When start button clicks, 
+Button click
+↓
+dispatch(startLoading())
+↓
+Redux action created:
+{ type: "app/startLoading" }
+↓
+Reducer runs
+↓
+state.loading = true
+↓
+Store updates
+↓
+useSelector detects change
+↓
+Component re-renders
+↓
+ACTIVE shown

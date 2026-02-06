@@ -9,8 +9,8 @@ type nul > src\routes\ProtectedRoute.tsx
 
 ```
 
-import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
   const isLoggedIn = useSelector(
@@ -29,21 +29,7 @@ export default ProtectedRoute;
 
 ```
 
-2. update App.tsx
-
-import ProtectedRoute from "./routes/ProtectedRoute";
-
-To:
-<Route
-path="/dashboard"
-element={
-<ProtectedRoute>
-<Dashboard />
-</ProtectedRoute>
-}
-/>
-
-3. red line under JSX
+2. red line under JSX
    function ProtectedRoute({ children }: { children: JSX.Element }) {
 
 Fix:
@@ -58,6 +44,42 @@ children: ReactNode ✅ preferred
 children: JSX.Element ❌ too strict
 
 Most production code uses ReactNode.
+
+ReactNode is a built-in React type.
+It includes anything React can render:
+
+JSX
+string
+number
+component
+fragment
+array of elements
+
+Examples:
+<div />
+"Hello"
+123
+<Component />
+<>
+  <A />
+  <B />
+</>
+
+3. update App.tsx
+
+import ProtectedRoute from "./routes/ProtectedRoute";
+
+To:
+<Route
+path="/dashboard"
+element={
+<ProtectedRoute>
+<Dashboard />
+</ProtectedRoute>
+}
+/>
+
+
 
 4. Test 1:
 
@@ -102,7 +124,7 @@ import { delay } from "redux-saga/effects";
 
 Add work saga below login saga:
 
-function\* logoutWorker(): SagaIterator {
+function* logoutWorker(): SagaIterator {
 yield delay(800); // simulate cleanup
 yield put(logoutSuccess());
 }
@@ -298,6 +320,7 @@ rootSaga:
 yield takeEvery(sendMessageRequest.type, sendMessageWorker);
 
 ----
+import takeEvery
 
 yield = “pause here and let the saga engine handle this step.”
 
@@ -431,7 +454,7 @@ import { Link } from "react-router-dom";
 </Link>
 
 
-22. Add Key Handler Function: Add this function inside component (near handleSend):
+22. ChatDemo.tsx -> Add Key Handler Function: Add this function inside component (near handleSend):
 
 const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
   if (e.key === "Enter") {

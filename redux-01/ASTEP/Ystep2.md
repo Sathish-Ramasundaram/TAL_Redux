@@ -29,6 +29,18 @@ put → reducer runs
 delay → wait
 put → reducer runs again
 
+The * means this is a generator function.
+yield means:
+⏸️ “Pause here and let Redux-Saga handle this step.
+A generator function can:
+run → pause → run → pause → continue
+instead of running fully in one go.
+yield is the pause point.
+
+Important rule
+yield only works inside:
+function* sagaName() {}
+Generator function only.
 
 2. Run Saga in Store
 
@@ -292,8 +304,11 @@ src/store/authSlice.ts
 update loginRequest: 
 From: 
 loginRequest: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
 
-
+To:
 loginRequest: (
   state,
   action: { payload: { email: string; password: string } }
@@ -396,6 +411,21 @@ Login click
 → put(loginSuccess / loginFailure)
 → reducer updates state
 → UI updates
+
+Button: 
+disabled={loading}
+This is very important UX behavior.
+If
+loading = true → button disabled
+loading = false → button enabled
+
+
+{loading ? "Logging in..." : "Login"}
+This is conditional rendering.
+When loading = true
+"Logging in..."
+When loading = false
+"Login"
 
 
 21. Show Login Page in App
