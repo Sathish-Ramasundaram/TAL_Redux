@@ -3,11 +3,12 @@ Jest = microscope 🔬
 Cypress = real user 👤
 Saga = business logic ⚙️
 
-1. npm install @reduxjs/toolkit react-redux redux-saga
-
+1. 
+npm install @reduxjs/toolkit react-redux redux-saga
 For modern Redux apps, Redux Toolkit (RTK) is the recommended way — even by the Redux team itself.
 
-2. npm install --save-dev cypress
+2. 
+npm install --save-dev cypress
 
 3. src/store/dataReducer.ts
 
@@ -104,7 +105,7 @@ import { store } from "./store/store";
 
 <Provider store={store}>
   <App />
-</Provider>;
+</Provider>
 
 ```
 
@@ -127,6 +128,7 @@ function App() {
       <button
         data-testid="fetch-btn"
         onClick={() => dispatch({ type: "FETCH_REQUEST" })}
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
       >
         Fetch Data
       </button>
@@ -140,6 +142,10 @@ function App() {
 export default App;
 
 ```
+
+Run react app
+
+
 8. Setup Cypress
 Run:
 npx cypress open
@@ -321,6 +327,7 @@ Sometimes CRA projects prefer separate Cypress tsconfig.
 Create file:
 cypress/tsconfig.json
 
+type nul > cypress\tsconfig.json
 
 Put this:
 
